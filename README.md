@@ -67,11 +67,14 @@ ChessAnalysis.exe <input.pgn>
 
 ---
 
-## **⚙️ Configuration Options:**  
+Let's correct that to accurately reflect the functionality of **ChessAnalysis**. Here’s the updated section:  
+
+---
+
+### **⚙️ Configuration Options:**  
 ChessAnalysis allows full customization of analysis settings:  
 - **Evaluation Margins:** Set custom thresholds for inaccuracies, mistakes, and blunders.  
-- **Glyph Customization:** Choose which glyphs to display and their corresponding evaluation ranges.  
-- **Depth and Nodes:** Control the depth and nodes for each evaluation to balance speed and accuracy.  
+- **Time Per Move:** Configure the time allocated for each move evaluation, balancing depth and speed.  
 
 Configuration can be adjusted via a **settings file**, making it flexible for all use cases.
 
@@ -89,10 +92,6 @@ Configuration can be adjusted via a **settings file**, making it flexible for al
    - Explain tactical motifs or positional ideas associated with blunders.  
 2. **Game Phase Analysis:**  
    - Summarize advantages and mistakes by game phases (Opening, Middlegame, Endgame).  
-3. **Integration with ChessBase/Fritz:**  
-   - Export annotated PGNs for deeper exploration or visualization in other tools.  
-4. **Visualization Tools:**  
-   - Integrate with web-based chessboard viewers for dynamic replay.
 
 ---
 
