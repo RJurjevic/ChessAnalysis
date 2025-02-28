@@ -73,7 +73,7 @@ ChessAnalysis allows full customization of analysis settings:
 - **Glyph Customization:** Choose which glyphs to display and their corresponding evaluation ranges.  
 - **Depth and Nodes:** Control the depth and nodes for each evaluation to balance speed and accuracy.  
 
-Configuration can be adjusted via a **settings file** or **command-line arguments**, making it flexible for all use cases.
+Configuration can be adjusted via a **settings file**, making it flexible for all use cases.
 
 ---
 
