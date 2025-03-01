@@ -30,26 +30,25 @@ namespace ChessAnalysis
             {
                 Contract.Require(analysis != null, "analysis != null");
                 int score = 0;
+                // Primary regex: Look for cp (centipawn evaluation)
                 string pattern = @"score\s+cp\s+(-?\d+)";
                 Regex regex = new Regex(pattern);
                 Match match = regex.Match(analysis);
                 if (match.Success)
                 {
-                    int s = 0;
-                    int.TryParse(match.Groups[1].Value, out s);
-                    score = s;
+                    int.TryParse(match.Groups[1].Value, out score);
                 }
                 else
                 {
+                    // Check for mate evaluations (Stockfish/Cfish use 'score mate +/-N')
                     pattern = @"score\s+mate\s+(-?\d+)";
                     regex = new Regex(pattern);
                     match = regex.Match(analysis);
                     if (match.Success)
                     {
-                        int m = 0;
-                        int.TryParse(match.Groups[1].Value, out m);
-                        int s = (m > 0) ? 32000 : -32000;
-                        score = s;
+                        int mateIn;
+                        int.TryParse(match.Groups[1].Value, out mateIn);
+                        score = (mateIn > 0) ? 32000 : -32000;
                     }
                 }
                 return score;
@@ -59,14 +58,13 @@ namespace ChessAnalysis
             {
                 Contract.Require(analysis != null, "analysis != null");
                 int depth = 0;
-                string pattern = @"depth\s+(-?\d+)";
+                // Ensure we only get the main depth value (avoiding multipv-related depth)
+                string pattern = @"\bdepth\s+(\d+)\b";
                 Regex regex = new Regex(pattern);
                 Match match = regex.Match(analysis);
                 if (match.Success)
                 {
-                    int d = 0;
-                    int.TryParse(match.Groups[1].Value, out d);
-                    depth = d;
+                    int.TryParse(match.Groups[1].Value, out depth);
                 }
                 return depth;
             }

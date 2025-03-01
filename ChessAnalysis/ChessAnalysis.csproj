@@ -5,12 +5,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Title>Chess Analyzer</Title>
-    <Version>1.0.0.0</Version>
+    <Title>ChessAnalysis</Title>
+    <Version>1.0.1.0</Version>
     <Authors>Robert Jurjevic</Authors>
-    <Company>M&amp;R Research Team London</Company>
-    <Description>Analyses chess games using Vafra Stockfish clone or other chess engine.</Description>
-    <Copyright>Copyright (C) 2024-2024</Copyright>
+    <Company>M&amp;R Research Team, London</Company>
+    <Description>Chess game analysis using Stockfish 17 and Vafra Cfish 12.7 engines, featuring annotated evaluations and customizable settings.</Description>
+    <Copyright>Copyright (C) 2024-2025 M&amp;R</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
