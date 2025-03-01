@@ -1,7 +1,3 @@
-Here is the **updated GitHub README** with your refinements:  
-
----
-
 # **ChessAnalysis**  
 
 ChessAnalysis is a **lightweight chess analysis tool** that annotates PGN files using **Stockfish 17** and **Vafra Cfish clones** (e.g., Cfish 12.7). It provides **clear, standardized chess glyphs** for evaluating game quality, detecting mistakes, and identifying key turning points.  
