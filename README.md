@@ -63,8 +63,4 @@ The project itself is licensed under **GNU GPL v3.0**, requiring derivative work
 
 ## **📫 Contact & Contributions**  
 - **Issues & Feature Requests:** Report them on [GitHub Issues](https://github.com/RJurjevic/ChessAnalysis/issues).  
-- **Contributions:** Fork the repo, create a branch, and submit a pull request.  
-
----
-
-This version **accurately reflects the build process** and **mentions the pre-built executables** for easier use. Let me know if you need any final tweaks! 🚀♟️
+- **Contributions:** Fork the repo, create a branch, and submit a pull request.
