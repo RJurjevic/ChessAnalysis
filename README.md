@@ -37,22 +37,21 @@ Each line in `config.txt` corresponds to a specific setting:
 
 ### **Example `config.txt`**
 ```
-stockfish-windows-x86-64-avx2.exe       # Chess engine executable
-512                                     # Engine hash size (MB)
-6                                       # Number of CPU threads for engine calculations
-C:\Users\Hostmaster\Downloads\RJ\Syzygy # Path to Syzygy endgame tablebases (optional)
--50                                     # Dubious move (?!) threshold (centipawns)
--100                                    # Bad move (?) threshold (centipawns)
--200                                    # Blunder (??) threshold (centipawns)
-10                                      # Good move (!) threshold (centipawns)
-30                                      # Excellent move (!!) threshold (centipawns)
-30                                      # Equal position margin (=) (centipawns, considered an even game)
-100                                     # Edge (+/= or =/+) (small advantage) margin (centipawns)
-200                                     # Better (+= or =+) (moderate-to-winning advantage) margin (centipawns, clear or decisive advantage)
-Score >200                              # Winning (+- or -+) (decisive advantage) threshold (centipawns)
-17                                      # Halfmove start (first move to analyze)
-999                                     # Halfmove end (last move to analyze)
-60                                      # Time per move in seconds (engine evaluation time per move)
+stockfish-windows-x86-64-avx2.exe  # Chess engine executable
+1024                               # Engine hash size (MB)
+6                                  # Number of CPU threads for engine calculations
+C:\Chess\Syzygy                    # Path to Syzygy endgame tablebases (optional)
+-50                                # Dubious move (?!) threshold (centipawns)
+-100                               # Bad move (?) threshold (centipawns)
+-200                               # Blunder (??) threshold (centipawns)
+10                                 # Good move (!) threshold (centipawns)
+30                                 # Excellent move (!!) threshold (centipawns)
+30                                 # Equal position margin (=) (centipawns, considered an even game)
+100                                # Edge (+/= or =/+) (small advantage) margin (centipawns)
+200                                # Better (+= or =+) (moderate-to-winning advantage) margin (centipawns), above Better (clear or decisive advantage) (+- or -+)
+17                                 # Halfmove start (first move to analyze)
+999                                # Halfmove end (last move to analyze)
+60                                 # Time per move in seconds (engine evaluation time per move)
 ```
 
 ---
