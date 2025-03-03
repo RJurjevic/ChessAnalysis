@@ -15,18 +15,56 @@ ChessAnalysis uses a `config.txt` file for full customization of engine behavior
 ### **Configuration Settings**  
 Each line in `config.txt` corresponds to a specific setting:  
 
-| **Setting**                 | **Description**                                                                 |
-|-----------------------------|-------------------------------------------------------------------------------|
-| **Engine Selection**        | Choose between **Stockfish 17** or **Vafra Cfish clones**.                    |
-| **Engine Hash (MB)**        | Set memory allocation for engine transposition table.                         |
-| **Engine Threads**          | Number of CPU threads used for analysis.                                      |
-| **Syzygy Path**             | Path to **Syzygy endgame tablebases** (optional).                             |
-| **Move Margins**            | Define how inaccuracies, mistakes, and blunders are classified.               |
-| **Good Move (`!`) Margin**    | If a move **improves the position** by this many centipawns, it gets a `!`.   |
-| **Excellent (`!!`) Margin**   | If a move **greatly improves the position**, it gets a `!!`.                  |
-| **Score Evaluation Margins**| Define when a position is considered **equal, better, or winning**.           |
-| **Halfmove Range**          | Analyze only moves within a certain range (useful for filtering long games).  |
-| **Move Time (Seconds)**     | Set time per move for evaluation.                                              |
+<table>
+  <thead>
+    <tr style="background-color: #ADD8E6;">
+      <th><b>Setting</b></th>
+      <th><b>Description</b></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Engine Selection</b></td>
+      <td>Choose between <b>Stockfish 17</b> or <b>Vafra Cfish clones</b>.</td>
+    </tr>
+    <tr>
+      <td><b>Engine Hash (MB)</b></td>
+      <td>Set memory allocation for engine transposition table.</td>
+    </tr>
+    <tr>
+      <td><b>Engine Threads</b></td>
+      <td>Number of CPU threads used for analysis.</td>
+    </tr>
+    <tr>
+      <td><b>Syzygy Path</b></td>
+      <td>Path to <b>Syzygy endgame tablebases</b> (optional).</td>
+    </tr>
+    <tr>
+      <td><b>Move Margins</b></td>
+      <td>Define how inaccuracies, mistakes, and blunders are classified.</td>
+    </tr>
+    <tr>
+      <td><b>Good Move (`!`) Margin</b></td>
+      <td>If a move <b>improves the position</b> by this many centipawns, it gets a `!`.</td>
+    </tr>
+    <tr>
+      <td><b>Excellent (`!!`) Margin</b></td>
+      <td>If a move <b>greatly improves the position</b>, it gets a `!!`.</td>
+    </tr>
+    <tr>
+      <td><b>Score Evaluation Margins</b></td>
+      <td>Define when a position is considered <b>equal, better, or winning</b>.</td>
+    </tr>
+    <tr>
+      <td><b>Halfmove Range</b></td>
+      <td>Analyze only moves within a certain range (useful for filtering long games).</td>
+    </tr>
+    <tr>
+      <td><b>Move Time (Seconds)</b></td>
+      <td>Set time per move for evaluation.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
