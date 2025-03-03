@@ -6,9 +6,9 @@ namespace ChessAnalysis
     public class Config
     {
         private string _engine = "vafra_v14.12.2_x86-64_avx2_windows.exe";
-        private int _engineHash = 1024;
-        private int _engineThreads = 2;
-        private string _engineSyzygyPath = @"C:\Users\Hostmaster\Downloads\RJ\Syzygy";
+        private int _engineHash = 512;
+        private int _engineThreads = 1;
+        private string _engineSyzygyPath = @"";
         private int _moveMarginDubious = -60;
         private int _moveMarginBad = -100;
         private int _moveMarginBlunder = -200;
@@ -28,13 +28,26 @@ namespace ChessAnalysis
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
             {
                 int maxLines = 15;
-                String[] lines = new String[maxLines];
-                int i = 0;
-                String line;
-                while ((line = streamReader.ReadLine()) != null && i < maxLines)
+                var lines = new List<string>();
+                string line;
+                while ((line = streamReader.ReadLine()) != null)
                 {
-                    lines[i] = line;
-                    i++;
+                    // Remove comments (anything after '#')
+                    int commentIndex = line.IndexOf('#');
+                    if (commentIndex != -1)
+                    {
+                        line = line.Substring(0, commentIndex);
+                    }
+                    // Trim spaces and ignore empty lines
+                    line = line.Trim();
+                    if (!string.IsNullOrEmpty(line))
+                    {
+                        lines.Add(line);
+                    }
+                }
+                if (lines.Count < 15)
+                {
+                    throw new Exception("Config file does not contain enough valid configuration lines.");
                 }
                 _engine = lines[0];
                 int val;
@@ -91,7 +104,6 @@ namespace ChessAnalysis
                 {
                     _engineMoveTime = val;
                 }
-                Contract.Assert(14 < maxLines, "14 < maxLines");
             }
         }
 
@@ -191,21 +203,22 @@ namespace ChessAnalysis
 
         public void OutputConfigs()
         {
-            ChessConsole.Instance.Status(String.Format("engine: {0}", _engine));
-            ChessConsole.Instance.Status(String.Format("engine hash (MB): {0}", _engineHash));
-            ChessConsole.Instance.Status(String.Format("engine threads: {0}", _engineThreads));
-            ChessConsole.Instance.Status(String.Format("engine Syzygy path: {0}", _engineSyzygyPath));
-            ChessConsole.Instance.Status(String.Format("move margin dubious (centipawns): {0}", _moveMarginDubious));
-            ChessConsole.Instance.Status(String.Format("move margin bad (centipawns): {0}", _moveMarginBad));
-            ChessConsole.Instance.Status(String.Format("move margin blunder (centipawns): {0}", _moveMarginBlunder));
-            ChessConsole.Instance.Status(String.Format("move margin good (centipawns): {0}", _moveMarginGood));
-            ChessConsole.Instance.Status(String.Format("move margin excellent (centipawns): {0}", _moveMarginExcellent));
-            ChessConsole.Instance.Status(String.Format("score equal (centipawns): {0}", _scoreEqual));
-            ChessConsole.Instance.Status(String.Format("score edge (centipawns): {0}", _scoreEdge));
-            ChessConsole.Instance.Status(String.Format("score better (centipawns): {0}", _scoreBetter));
-            ChessConsole.Instance.Status(String.Format("halfmove start: {0}", _halfmoveStart));
-            ChessConsole.Instance.Status(String.Format("halfmove end: {0}", _halfmoveEnd));
-            ChessConsole.Instance.Status(String.Format("engine move time (seconds): {0}", _engineMoveTime));
+            ChessConsole.Instance.Status($"Engine:                     {_engine}");
+            ChessConsole.Instance.Status($"Engine Hash (MB):           {_engineHash}");
+            ChessConsole.Instance.Status($"Engine Threads:             {_engineThreads}");
+            ChessConsole.Instance.Status($"Engine Syzygy Path:         {_engineSyzygyPath}");
+            ChessConsole.Instance.Status($"Move Margin Dubious (?!):   {_moveMarginDubious} centipawns");
+            ChessConsole.Instance.Status($"Move Margin Bad (?):        {_moveMarginBad} centipawns");
+            ChessConsole.Instance.Status($"Move Margin Blunder (??):   {_moveMarginBlunder} centipawns");
+            ChessConsole.Instance.Status($"Move Margin Good (!):       {_moveMarginGood} centipawns");
+            ChessConsole.Instance.Status($"Move Margin Excellent (!!): {_moveMarginExcellent} centipawns");
+            ChessConsole.Instance.Status($"Score Equal (=):            {_scoreEqual} centipawns");
+            ChessConsole.Instance.Status($"Score Edge (+/= or =/+):    {_scoreEdge} centipawns");
+            ChessConsole.Instance.Status($"Score Better (+= or =+):    {_scoreBetter} centipawns (moderate advantage)");
+            ChessConsole.Instance.Status($"Score >{_scoreBetter} (+- or -+):      >{_scoreBetter} Winning (+- or -+) (decisive advantage)");
+            ChessConsole.Instance.Status($"Halfmove Start:             {_halfmoveStart}");
+            ChessConsole.Instance.Status($"Halfmove End:               {_halfmoveEnd}");
+            ChessConsole.Instance.Status($"Engine Move Time:           {_engineMoveTime} seconds");
         }
     }
 }

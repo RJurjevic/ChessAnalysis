@@ -292,12 +292,15 @@ namespace ChessAnalysis
             Contract.Require(engineMoveTime > 0, "engineMoveTime > 0");
             Contract.Require(_game != null, "_game != null");
             ChessGame game = _game;
+            ChessConsole.Instance.Info(String.Format("{0}", "Loading game..."));
             game.LoadFromPgn(file);
             string pgn = game.GetPgn();
             Contract.Assert(pgn != null, "pgn != null");
             ChessConsole.Instance.Info(String.Format("pgn: {0}", pgn));
+            ChessConsole.Instance.Info(String.Format("{0}", "Getting positions..."));
             List<ChessGame.ChessPosition> positions = game.GetPositions();
             Contract.Assert(positions != null, "positions != null");
+            ChessConsole.Instance.Header(String.Format("{0}", "Analyzing..."));
             string pgnMoves = DoAnalyze(positions, halfmoveStart, halfmoveEnd, engineMoveTime);
             string annotatedPgn = game.GetAnnotatedPgn(pgnMoves);
             ChessConsole.Instance.Status(String.Format("annotatedPgn: {0}", annotatedPgn));

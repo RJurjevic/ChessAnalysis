@@ -23,14 +23,14 @@ namespace ChessAnalysis
                     ChessAnalysis analysis = new ChessAnalysis(game);
                     Contract.Assert(analysis != null, "analysis != null");
                     Config.Instance.OutputConfigs();
-                    ChessConsole.Instance.Header(String.Format("{0}", "Analyzing..."));
                     string annotatedPgn = analysis.Analyze(file, Config.Instance.GetHalfmoveStart(), Config.Instance.GetHalfmoveEnd(), Config.Instance.GetEngineMoveTime());
                     System.IO.File.WriteAllText(System.IO.Path.GetFileNameWithoutExtension(file) + "_annotated.pgn", annotatedPgn, Encoding.Unicode);
                     ChessConsole.Instance.Header(String.Format("{0}", "Analysis completed"));
                 }
                 catch (Exception e)
                 {
-                    ChessConsole.Instance.Error(String.Format("Exception: {0}", e.Message));
+                    ChessConsole.Instance.Error($"Exception: {e.Message}");
+                    ChessConsole.Instance.Debug($"StackTrace:\n{e.StackTrace}");
                 }
             }
         }
