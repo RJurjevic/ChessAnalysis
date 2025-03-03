@@ -90,6 +90,28 @@ This allows players to **track gradual positional shifts**, rather than only see
 
 ---
 
+## **🛠️ Build Instructions (Visual Studio 2022)**  
+To build ChessAnalysis from source:  
+1. **Clone the repository:**  
+   
+sh
+   git clone https://github.com/RJurjevic/ChessAnalysis.git
+  
+2. **Open the solution in Visual Studio 2022:**  
+   - Open ChessAnalysis.sln in **Visual Studio 2022**.  
+3. **Build the solution:**  
+   - Select **Release** configuration.  
+   - Build the entire **ChessAnalysis** solution.  
+4. **Publish the executable:**  
+   - Right-click the ChessAnalysis project → **Publish** → Select **Publish**.  
+
+---
+
+## **📦 Pre-Built Executable**  
+A **pre-built version** of ChessAnalysis.exe, along with compatible **chess engine executables** and **network files**, will be available in the [GitHub Releases](https://github.com/RJurjevic/ChessAnalysis/releases) section as a **Zipped archive** for easy setup.  
+
+---
+
 ## **🚀 Usage:**  
 Run ChessAnalysis with a PGN file:  
 ```sh
