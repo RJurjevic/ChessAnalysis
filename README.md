@@ -22,8 +22,8 @@ Each line in `config.txt` corresponds to a specific setting:
 | **Engine Threads**          | Number of CPU threads used for analysis.                                      |
 | **Syzygy Path**             | Path to **Syzygy endgame tablebases** (optional).                             |
 | **Move Margins**            | Define how inaccuracies, mistakes, and blunders are classified.               |
-| **Good Move (!) Margin**    | If a move **improves the position** by this many centipawns, it gets a `!`.   |
-| **Excellent (!!) Margin**   | If a move **greatly improves the position**, it gets a `!!`.                  |
+| **Good Move (`!`) Margin**    | If a move **improves the position** by this many centipawns, it gets a `!`.   |
+| **Excellent (`!!`) Margin**   | If a move **greatly improves the position**, it gets a `!!`.                  |
 | **Score Evaluation Margins**| Define when a position is considered **equal, better, or winning**.           |
 | **Halfmove Range**          | Analyze only moves within a certain range (useful for filtering long games).  |
 | **Move Time (Seconds)**     | Set time per move for evaluation.                                              |
