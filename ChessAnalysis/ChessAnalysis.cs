@@ -31,9 +31,19 @@ namespace ChessAnalysis
                     changes = true;
                 }
             }
-            else if (Math.Abs(scoreLast) > Config.Instance.GetScoreBetter())
+            else if (Math.Abs(scoreLast) > Config.Instance.GetScoreBetter() &&
+                     Math.Abs(scoreLast) <= Config.Instance.GetScoreCrushing())
             {
-                if (Math.Abs(score) <= Config.Instance.GetScoreBetter() || change)
+                if (Math.Abs(score) <= Config.Instance.GetScoreBetter() ||
+                    Math.Abs(score) > Config.Instance.GetScoreCrushing() ||
+                    change)
+                {
+                    changes = true;
+                }
+            }
+            else if (Math.Abs(scoreLast) > Config.Instance.GetScoreCrushing())
+            {
+                if (Math.Abs(score) <= Config.Instance.GetScoreCrushing() || change)
                 {
                     changes = true;
                 }
@@ -113,7 +123,8 @@ namespace ChessAnalysis
                         glyphScore = (score > 0) ? "$17" : "$16";
                     }
                 }
-                if (Math.Abs(score) > Config.Instance.GetScoreBetter())
+                if (Math.Abs(score) > Config.Instance.GetScoreBetter() &&
+                    Math.Abs(score) <= Config.Instance.GetScoreCrushing())
                 {
                     if (halfmove % 2 == 0)
                     {
@@ -122,6 +133,17 @@ namespace ChessAnalysis
                     else
                     {
                         glyphScore = (score > 0) ? "$19" : "$18";
+                    }
+                }
+                if (Math.Abs(score) > Config.Instance.GetScoreCrushing())
+                {
+                    if (halfmove % 2 == 0)
+                    {
+                        glyphScore = (score > 0) ? "$20" : "$21";
+                    }
+                    else
+                    {
+                        glyphScore = (score > 0) ? "$21" : "$20";
                     }
                 }
             }

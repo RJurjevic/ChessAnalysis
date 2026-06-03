@@ -17,6 +17,7 @@ namespace ChessAnalysis
         private int _scoreEqual = 30;
         private int _scoreEdge = 100;
         private int _scoreBetter = 200;
+        private int _scoreCrushing = 800;
         private int _halfmoveStart = 9;
         private int _halfmoveEnd = 999;
         private int _engineMoveTime = 60;
@@ -27,7 +28,7 @@ namespace ChessAnalysis
             using (var fileStream = File.OpenRead("config.txt"))
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
             {
-                int maxLines = 15;
+                const int RequiredConfigLines = 16;
                 var lines = new List<string>();
                 string line;
                 while ((line = streamReader.ReadLine()) != null)
@@ -45,9 +46,9 @@ namespace ChessAnalysis
                         lines.Add(line);
                     }
                 }
-                if (lines.Count < 15)
+                if (lines.Count < RequiredConfigLines)
                 {
-                    throw new Exception("Config file does not contain enough valid configuration lines.");
+                    throw new Exception($"Config file does not contain enough valid configuration lines. Expected {RequiredConfigLines}, found {lines.Count}.");
                 }
                 _engine = lines[0];
                 int val;
@@ -94,13 +95,17 @@ namespace ChessAnalysis
                 }
                 if (int.TryParse(lines[12], out val))
                 {
-                    _halfmoveStart = val;
+                    _scoreCrushing = val;
                 }
                 if (int.TryParse(lines[13], out val))
                 {
-                    _halfmoveEnd = val;
+                    _halfmoveStart = val;
                 }
                 if (int.TryParse(lines[14], out val))
+                {
+                    _halfmoveEnd = val;
+                }
+                if (int.TryParse(lines[15], out val))
                 {
                     _engineMoveTime = val;
                 }
@@ -186,6 +191,11 @@ namespace ChessAnalysis
             return _scoreBetter;
         }
 
+        public int GetScoreCrushing()
+        {
+            return _scoreCrushing;
+        }
+
         public int GetHalfmoveStart()
         {
             return _halfmoveStart;
@@ -213,9 +223,10 @@ namespace ChessAnalysis
             ChessConsole.Instance.Status($"Move Margin Good (!):       {_moveMarginGood} centipawns");
             ChessConsole.Instance.Status($"Move Margin Excellent (!!): {_moveMarginExcellent} centipawns");
             ChessConsole.Instance.Status($"Score Equal (=):            {_scoreEqual} centipawns");
-            ChessConsole.Instance.Status($"Score Edge (+/= or =/+):    {_scoreEdge} centipawns");
-            ChessConsole.Instance.Status($"Score Better (+= or =+):    {_scoreBetter} centipawns (moderate advantage)");
-            ChessConsole.Instance.Status($"Score >{_scoreBetter} (+- or -+):      >{_scoreBetter} Winning (+- or -+) (decisive advantage)");
+            ChessConsole.Instance.Status($"Score Edge (+/= or =/+):    {_scoreEdge} centipawns");           
+            ChessConsole.Instance.Status($"Score Better (+= or =+):    {_scoreBetter} centipawns (moderate advantage threshold)");
+            ChessConsole.Instance.Status($"Score Decisive ($18/$19):   >{_scoreBetter} to {_scoreCrushing} centipawns");
+            ChessConsole.Instance.Status($"Score Crushing ($20/$21):   >{_scoreCrushing} centipawns");
             ChessConsole.Instance.Status($"Halfmove Start:             {_halfmoveStart}");
             ChessConsole.Instance.Status($"Halfmove End:               {_halfmoveEnd}");
             ChessConsole.Instance.Status($"Engine Move Time:           {_engineMoveTime} seconds");
