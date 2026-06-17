@@ -9,6 +9,7 @@ ChessAnalysis is a **lightweight chess analysis tool** that annotates PGN files 
 - **Engine Support:** Works with **Stockfish 18** and **Vafra Cfish clones**.
 - **Standardized Chess Glyphs:** Clearly marks **inaccuracies, mistakes, blunders, and positional evaluations** using standard PGN Numeric Annotation Glyphs (NAGs).
 - **Crushing Advantage Detection:** Supports `$20` and `$21` for resignation-level advantages.
+- **Forced-Mate Blunder Override:** Starting with `v1.0.4.0`, marks a move as `$4` if it changes the engine assessment from non-mate to forced mate for the opponent.
 - **Configurable Margins:** Fine-tune thresholds for blunders, inaccuracies, good moves, excellent moves, and evaluation bands.
 - **Flexible Analysis Settings:** Adjust engine hash size, CPU threads, Syzygy tablebase path, halfmove range, and time per move.
 - **Comment Handling in Config:** Supports `#` comments in `config.txt` for better customization.
@@ -80,6 +81,20 @@ ChessAnalysis determines move quality by comparing **before and after evaluation
 
 To improve accuracy, ChessAnalysis **re-evaluates** a position if the first pass suggests a good or excellent move. If evaluation keeps improving, it re-searches with **double the time**, repeating the process until a stable evaluation is found.
 
+### **Forced-Mate Blunder Override**
+
+Starting with `v1.0.4.0`, ChessAnalysis includes a narrow tactical override for forced mates. If the engine's best line before the played move is **not** a forced mate, but after the played move the opponent has a forced mate, the played move is marked as a blunder (`$4`).
+
+This catches important practical mistakes in already winning or lost positions, where the normal centipawn/evaluation-band logic may not add another move glyph because the position is already marked as decisive or crushing.
+
+Example:
+
+```pgn
+10... Rb8 $4 $18 11. Ng5 d5 $4 $20 12. Qh5 Be6 $4 13. Qxh7#
+```
+
+Here, Black was already in serious trouble, but `12... Be6` is still marked as `$4` because it allows a forced mate.
+
 ---
 
 ## **🏆 Understanding Score Margins**
@@ -136,6 +151,14 @@ Example:
 
 This means Black made a blunder (`$4`) and White now has a crushing advantage (`$20`).
 
+Another example from the forced-mate override:
+
+```pgn
+12... Be6 $4
+```
+
+This means the move allowed a forced mate for the opponent, even if the position was already evaluated as crushing.
+
 ---
 
 ## **🚀 Usage**
@@ -162,6 +185,7 @@ If an output file with the same name already exists, it is overwritten.
 - **Allows fine-tuning move classification and position evaluation.**
 - **Supports standard PGN/NAG glyphs for move quality and positional assessment.**
 - **Adds `$20` / `$21` crushing advantage detection in `v1.0.3.0`.**
+- **Adds forced-mate blunder override in `v1.0.4.0`.**
 - **Uses smart move re-evaluation to confirm good (`!`) and excellent (`!!`) moves.**
 - **Customizable time control, ensuring balance between speed and accuracy.**
 

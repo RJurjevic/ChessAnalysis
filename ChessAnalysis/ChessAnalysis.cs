@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics.Meyer.Contracts;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace ChessAnalysis
 {
@@ -51,9 +53,54 @@ namespace ChessAnalysis
             return changes;
         }
 
-        private string SetGlyphMove(int delta, bool bestplayLast, int halfmove, int halfmoveStart, int scoreLast, int score)
+        private int? GetMateScore(string analysis)
+        {
+            if (string.IsNullOrWhiteSpace(analysis))
+            {
+                return null;
+            }
+
+            MatchCollection matches = Regex.Matches(analysis, @"\bscore\s+mate\s+(-?\d+)\b");
+
+            if (matches.Count == 0)
+            {
+                return null;
+            }
+
+            Match lastMatch = matches[matches.Count - 1];
+
+            return int.Parse(lastMatch.Groups[1].Value, CultureInfo.InvariantCulture);
+        }
+
+        private bool IsForcedMateBlunder(string analysisBeforeMove, string analysisAfterMove)
+        {
+            int? mateBeforeMove = GetMateScore(analysisBeforeMove);
+            int? mateAfterMove = GetMateScore(analysisAfterMove);
+
+            // Before the played move, the engine's best move was already a mate line.
+            // In that case, do not force a new blunder glyph here.
+            if (mateBeforeMove.HasValue)
+            {
+                return false;
+            }
+
+            // After the played move, it is the opponent's turn.
+            // A positive mate score means the opponent can force mate.
+            if (mateAfterMove.HasValue && mateAfterMove.Value > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private string SetGlyphMove(int delta, bool bestplayLast, int halfmove, int halfmoveStart, int scoreLast, int score, bool forcedMateBlunder)
         {
             string glyphMove = "";
+            if (halfmove > halfmoveStart && forcedMateBlunder)
+            {
+                return "$4";
+            }
             if (halfmove > halfmoveStart && ChangesGameOutcome(scoreLast, score) == true)
             {
                 Contract.Assert(halfmove > halfmoveStart, "halfmove >= halfmoveStart");
@@ -184,11 +231,11 @@ namespace ChessAnalysis
             return theMove;
         }
 
-        private string AnnotateTheMove(int delta, bool bestplayLast, int scoreLast, int score, int halfmove, int halfmoveStart, int halfmoveEnd, int depth, int fullmove, string moveLast)
+        private string AnnotateTheMove(int delta, bool bestplayLast, int scoreLast, int score, int halfmove, int halfmoveStart, int halfmoveEnd, int depth, int fullmove, string moveLast, bool forcedMateBlunder)
         {
             Contract.Require(moveLast != null, "moveLast != null");
             string engineComment = "";
-            string glyphMove = SetGlyphMove(delta, bestplayLast, halfmove, halfmoveStart, scoreLast, score);
+            string glyphMove = SetGlyphMove(delta, bestplayLast, halfmove, halfmoveStart, scoreLast, score, forcedMateBlunder);
             string glyphScore = SetGlypScore(delta, scoreLast, score, halfmove, halfmoveStart);
             string glyphMoveSeparator = (glyphMove.Length > 0) ? " " : "";
             string glyphScoreSeparator = (glyphScore.Length > 0) ? " " : "";
@@ -267,7 +314,14 @@ namespace ChessAnalysis
                 }
                 if (fullmove > 0 && moveLast.Length > 0)
                 {
-                    string theMove = AnnotateTheMove(delta, bestplayLast, scoreLast, score, halfmove, halfmoveStart, halfmoveEnd, depth, fullmove, moveLast);
+                    bool forcedMateBlunder = IsForcedMateBlunder(analysisLast, analysisThe);
+
+                    if (forcedMateBlunder)
+                    {
+                        ChessConsole.Instance.Debug(String.Format("forcedMateBlunder: {0}", forcedMateBlunder));
+                    }
+
+                    string theMove = AnnotateTheMove(delta, bestplayLast, scoreLast, score, halfmove, halfmoveStart, halfmoveEnd, depth, fullmove, moveLast, forcedMateBlunder);
                     ChessConsole.Instance.Move(theMove);
                     pgnMoves += theMove + " ";
                     ChessConsole.Instance.Info(String.Format("pgnMoves: {0}", pgnMoves));
