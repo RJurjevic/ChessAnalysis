@@ -191,7 +191,7 @@ If an output file with the same name already exists, it is overwritten.
 
 ---
 
-## **🛠️ Build Instructions (Visual Studio 2022)**
+## **🛠️ Build Instructions**
 
 To build ChessAnalysis from source:
 
@@ -201,15 +201,19 @@ To build ChessAnalysis from source:
    git clone https://github.com/RJurjevic/ChessAnalysis.git
    ```
 
-2. **Open the solution in Visual Studio 2022:**
-   - Open `ChessAnalysis.sln` in **Visual Studio 2022**.
+2. **Open the solution in Visual Studio:**
+
+   * Open `ChessAnalysis.sln` in **Visual Studio 2022 or later**.
+   * The project has also been built and published successfully with **Visual Studio 2026 Community**.
 
 3. **Build the solution:**
-   - Select **Release** configuration.
-   - Build the entire **ChessAnalysis** solution.
+
+   * Select **Release** configuration.
+   * Build the entire **ChessAnalysis** solution.
 
 4. **Publish the executable:**
-   - Right-click the ChessAnalysis project → **Publish** → Select **Publish**.
+
+   * Right-click the ChessAnalysis project → **Publish** → Select **Publish**.
 
 ---
 
